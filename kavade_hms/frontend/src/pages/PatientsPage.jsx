@@ -6,8 +6,7 @@ import AddPatientModal   from '../components/AddPatientModal'
 import ConsultModal      from '../components/ConsultModal'
 import BillModal         from '../components/BillModal'
 import { theme, STATUS_COLORS } from '../theme'
-import './Patientspage.css'
-
+import './PatientsPage.css'
 /* ── Helpers ──────────────────────────────────────────────── */
 function formatTime(d) {
   if (!d) return '—'
