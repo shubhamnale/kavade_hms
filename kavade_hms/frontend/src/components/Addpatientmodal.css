@@ -1,0 +1,81 @@
+/* ============================================================
+   AddPatientModal.css
+   Responsive styles for the Register New Patient modal
+   ============================================================ */
+
+
+/* ── Form Grid ────────────────────────────────────────────── */
+/*
+   Two-column grid for the paired fields (Name + Age, Gender + Phone).
+   Collapses to a single column on narrow screens.
+*/
+.add-patient-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+
+/* ── Field Error Message ──────────────────────────────────── */
+.add-patient-field-error {
+  font-size: 11px;
+  color: #D32F2F;
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+
+
+/* ── Input: Error State ───────────────────────────────────── */
+/*
+   Applied alongside inputStyle (from UI) when a field has a validation error.
+   Overrides the border and adds a subtle error outline.
+*/
+.add-patient-input--error {
+  border-color: #D32F2F !important;
+  outline: 1px solid #D32F2F !important;
+}
+
+
+/* ── Modal Footer (action buttons) ───────────────────────── */
+.add-patient-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   Responsive Breakpoints
+   ============================================================ */
+
+/* ── Small Tablet / Large Phone (≤ 600px) ─────────────────── */
+@media (max-width: 600px) {
+  .add-patient-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .add-patient-footer {
+    flex-direction: column-reverse; /* Cancel below Register on mobile */
+    gap: 8px;
+  }
+
+  /* Stretch buttons full-width on small screens */
+  .add-patient-footer > * {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Phone (≤ 400px) ──────────────────────────────────────── */
+@media (max-width: 400px) {
+  .add-patient-grid {
+    gap: 10px;
+  }
+
+  .add-patient-field-error {
+    font-size: 10px;
+  }
+}

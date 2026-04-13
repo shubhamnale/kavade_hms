@@ -1,0 +1,93 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #F5F7FA;
+  color: #212121;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+input, select, textarea, button { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+button { cursor: pointer; }
+a { text-decoration: none; color: inherit; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #e8e8e8; }
+::-webkit-scrollbar-thumb { background: #90A4AE; border-radius: 4px; }
+
+@keyframes fadeIn  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes spin    { to { transform: rotate(360deg); } }
+@keyframes shimmer { 0%,100%{ opacity:1 } 50%{ opacity:.4 } }
+
+/* ── Mobile responsiveness ── */
+
+/* Page padding on small screens */
+@media (max-width: 640px) {
+  .page-content {
+    padding: 14px !important;
+  }
+}
+
+/* Stat card grids: 4-col → 2-col → 2-col on mobile */
+@media (max-width: 900px) {
+  .stat-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .stat-grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-grid-4,
+  .stat-grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+}
+
+/* StatCard inner sizing on mobile */
+@media (max-width: 640px) {
+  .stat-card {
+    padding: 14px 12px !important;
+    border-radius: 10px !important;
+  }
+
+  .stat-card .stat-icon {
+    font-size: 20px !important;
+  }
+
+  .stat-card .stat-value {
+    font-size: 22px !important;
+    margin: 6px 0 4px !important;
+  }
+
+  .stat-card .stat-label {
+    font-size: 10px !important;
+    letter-spacing: 0.3px !important;
+  }
+
+  .stat-card .stat-bubble {
+    width: 54px !important;
+    height: 54px !important;
+    right: -14px !important;
+    bottom: -14px !important;
+  }
+}
+
+/* Table horizontal scroll on mobile */
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  .table-scroll-wrapper table {
+    min-width: 520px;
+  }
+}

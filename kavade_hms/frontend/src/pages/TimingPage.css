@@ -1,0 +1,328 @@
+/* ============================================================
+   TimingPage.css
+   Responsive styles for the Timing Log dashboard page
+   ============================================================ */
+
+/* ── Animations ───────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+
+/* ── Page Layout ──────────────────────────────────────────── */
+.timing-page {
+  padding: 28px;
+  animation: fadeIn 0.25s ease;
+}
+
+
+/* ── Stat Grid ────────────────────────────────────────────── */
+.timing-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+
+/* ── Stat Card ────────────────────────────────────────────── */
+.timing-stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  /* border-left color is applied inline (dynamic per-card accent colour) */
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+
+.timing-stat-card__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 6px;
+}
+
+.timing-stat-card__value {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  transition: opacity 0.3s;
+}
+
+.timing-stat-card__value--loading {
+  opacity: 0.4;
+}
+
+
+/* ── Table Card Header ────────────────────────────────────── */
+.timing-card-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.timing-card-header__title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.timing-card-header__count {
+  font-size: 12px;
+}
+
+
+/* ── Table Wrapper ────────────────────────────────────────── */
+.timing-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+
+/* ── Data Table ───────────────────────────────────────────── */
+.timing-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.timing-table thead th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.timing-table tbody tr {
+  border-bottom: 1px solid #EEF2F7;
+  transition: background 0.15s;
+}
+
+.timing-table tbody td {
+  padding: 10px 14px;
+}
+
+
+/* ── Table Cell Helpers ───────────────────────────────────── */
+.timing-cell--id {
+  font-weight: 700;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.timing-cell--name {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.timing-cell--doctor {
+  font-size: 12px;
+}
+
+.timing-cell--time {
+  font-size: 12px;
+}
+
+.timing-cell__date-prefix {
+  font-size: 10px;
+}
+
+.timing-cell--amount {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.timing-duration {
+  font-weight: 700;
+}
+
+
+/* ── Status Badge ─────────────────────────────────────────── */
+.timing-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  border-width: 1px;
+  border-style: solid;
+  white-space: nowrap;
+}
+
+.timing-status-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+
+/* ── Payment Method Badge ─────────────────────────────────── */
+.timing-payment-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.timing-payment-badge--online {
+  background: #E3F2FD;
+  color: #1565C0;
+}
+
+.timing-payment-badge--offline {
+  background: #F3E5F5;
+  color: #6A1B9A;
+}
+
+
+/* ── Skeleton Loader ──────────────────────────────────────── */
+.timing-skeleton-cell {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    #EEF2F7 25%,
+    #F8FAFC 50%,
+    #EEF2F7 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+
+/* ── Empty State ──────────────────────────────────────────── */
+.timing-empty {
+  padding: 40px;
+  text-align: center;
+}
+
+
+/* ============================================================
+   Responsive Breakpoints
+   ============================================================ */
+
+/* ── Large Tablet (≤ 1024px) ──────────────────────────────── */
+@media (max-width: 1024px) {
+  .timing-page {
+    padding: 20px;
+  }
+
+  .timing-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .timing-stat-card {
+    padding: 14px 16px;
+  }
+
+  .timing-stat-card__value {
+    font-size: 20px;
+  }
+}
+
+
+/* ── Small Tablet / Large Phone (≤ 768px) ─────────────────── */
+@media (max-width: 768px) {
+  .timing-page {
+    padding: 16px;
+  }
+
+  .timing-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .timing-stat-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .timing-stat-card__label {
+    font-size: 10px;
+  }
+
+  .timing-stat-card__value {
+    font-size: 18px;
+  }
+
+  .timing-card-header {
+    padding: 12px 16px;
+  }
+
+  .timing-card-header__title {
+    font-size: 14px;
+  }
+
+  .timing-table thead th {
+    font-size: 12px;
+  }
+
+  /* Fade-out scroll hint on the right edge */
+  .timing-table-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 32px;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8));
+  }
+}
+
+
+/* ── Phone (≤ 480px) ──────────────────────────────────────── */
+@media (max-width: 480px) {
+  .timing-page {
+    padding: 12px;
+  }
+
+  .timing-stat-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .timing-stat-card {
+    padding: 10px 12px;
+    border-radius: 8px;
+  }
+
+  .timing-stat-card__label {
+    font-size: 9px;
+    margin-bottom: 4px;
+  }
+
+  .timing-stat-card__value {
+    font-size: 16px;
+  }
+
+  .timing-card-header {
+    padding: 10px 14px;
+  }
+
+  .timing-table thead th {
+    font-size: 11px;
+  }
+}

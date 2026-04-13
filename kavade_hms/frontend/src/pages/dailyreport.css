@@ -1,0 +1,698 @@
+/* ============================================
+   DAILY REPORT PAGE - COMPLETE CSS
+   Fixes: Blank first page issue
+   ============================================ */
+
+/* ============================================
+   GLOBAL RESET & BASE STYLES
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+}
+
+/* ============================================
+   PRINT STYLES - FIX BLANK PAGE
+   ============================================ */
+@media print {
+  * {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: white;
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 5mm 5mm 10mm 5mm;
+    padding: 0;
+  }
+
+  /* CRITICAL: Hide all web UI elements during print */
+  .daily-report-container > *:not(.report-display),
+  .PageHeader,
+  .controls-section,
+  .error-message,
+  .loading-container,
+  .ui-report-header,
+  .ui-grand-total {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  .report-display {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  /* ---- PRINT HEADER ---- */
+  .rpt-header {
+    text-align: center;
+    border-bottom: 1.5px solid #1565C0;
+    padding: 3px 0 2px 0;
+    margin: 0 0 3px 0;
+    page-break-after: avoid;
+  }
+
+  .rpt-header h1 {
+    font-size: 13px;
+    font-weight: bold;
+    color: #1565C0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rpt-header .sub {
+    font-size: 7.5px;
+    color: #666;
+    margin: 0.5px 0 0 0;
+    padding: 0;
+  }
+
+  .rpt-header .title {
+    font-size: 9px;
+    font-weight: bold;
+    color: #1565C0;
+    margin: 1px 0 0 0;
+    padding: 0;
+  }
+
+  .rpt-header .date {
+    font-size: 7.5px;
+    color: #666;
+    margin: 0.5px 0 0 0;
+    padding: 0;
+  }
+
+  /* ---- DOCTOR BLOCK ---- */
+  .doc-block {
+    margin: 0 0 4px 0;
+    padding: 0;
+    page-break-inside: avoid;
+    border: 0.5px solid #ddd;
+  }
+
+  .doc-heading {
+    background: #1565C0;
+    color: white;
+    font-size: 8px;
+    font-weight: bold;
+    padding: 2px 3px;
+    margin: 0;
+  }
+
+  /* ---- TABLE STYLES ---- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8px;
+    margin: 0;
+    padding: 0;
+  }
+
+  thead {
+    background: #f0f0f0;
+  }
+
+  th {
+    padding: 1.5px 2px;
+    text-align: left;
+    font-size: 7px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 0.5px solid #ddd;
+  }
+
+  td {
+    padding: 1px 2px;
+    font-size: 7.5px;
+    border-bottom: 0.5px solid #eee;
+    color: #222;
+  }
+
+  .td-sr {
+    width: 20px;
+    text-align: center;
+    color: #999;
+  }
+
+  .td-name {
+    font-weight: bold;
+  }
+
+  .td-mono {
+    font-family: monospace;
+    font-size: 7px;
+  }
+
+  .td-amt {
+    font-weight: bold;
+    color: #2E7D32;
+    text-align: right;
+  }
+
+  .th-right {
+    text-align: right;
+  }
+
+  /* ---- DOCTOR FOOTER ---- */
+  .doc-foot {
+    background: #f9f9f9;
+    border-top: 0.5px solid #ddd;
+    padding: 1px 3px;
+    text-align: right;
+    font-size: 7px;
+    font-weight: bold;
+    color: #1565C0;
+  }
+
+  /* ---- SUMMARY SECTION ---- */
+  .summary {
+    margin: 3px 0 0 0;
+    padding: 3px 4px;
+    border: 0.5px solid #1565C0;
+    background: #f5f7fa;
+    page-break-inside: avoid;
+    font-size: 7.5px;
+  }
+
+  .summary-row {
+    padding: 1px 0;
+    font-size: 7.5px;
+  }
+
+  .summary-row .lbl {
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+    min-width: 120px;
+  }
+
+  .summary-row .val {
+    font-weight: bold;
+    color: #1565C0;
+  }
+
+  .summary-row .val-green {
+    font-weight: bold;
+    color: #2E7D32;
+  }
+
+  /* ---- PRINT FOOTER ---- */
+  .rpt-footer {
+    margin-top: 3px;
+    padding-top: 1px;
+    border-top: 0.5px solid #ddd;
+    text-align: center;
+    font-size: 6px;
+    color: #999;
+    page-break-before: avoid;
+  }
+
+  /* ---- PREVENT PAGE BREAKS ---- */
+  .doc-block,
+  .summary,
+  .doc-heading,
+  .rpt-header {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* ============================================
+   SCREEN STYLES - WEB INTERFACE
+   ============================================ */
+@media screen {
+  .daily-report-container {
+    padding: 28px;
+    animation: fadeIn 0.35s ease;
+    background: #f5f5f5;
+    min-height: 100vh;
+  }
+
+  /* ---- CONTROLS SECTION ---- */
+  .controls-section {
+    background: white;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .controls-section label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #757575;
+    min-width: 100px;
+  }
+
+  .controls-section input[type="date"] {
+    padding: 10px 13px;
+    border: 1px solid #E0E0E0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #212121;
+    background: white;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .controls-section input[type="date"]:focus {
+    border-color: #2196F3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  }
+
+  .controls-section button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .controls-section button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .controls-section button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  /* ---- ERROR MESSAGE ---- */
+  .error-message {
+    background: #FFEBEE;
+    border: 1px solid #EF9A9A;
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #C62828;
+    margin-bottom: 20px;
+    font-size: 14px;
+    animation: slideDown 0.3s ease;
+  }
+
+  /* ---- LOADING CONTAINER ---- */
+  .loading-container {
+    padding: 40px;
+    text-align: center;
+    background: white;
+    border-radius: 10px;
+  }
+
+  /* ---- REPORT DISPLAY ---- */
+  .report-display {
+    background: white;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  /* ---- REPORT HEADER ---- */
+  .ui-report-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #E0E0E0;
+    background: linear-gradient(135deg, #FAFBFC 0%, #F0F4F8 100%);
+  }
+
+  .ui-report-header h2 {
+    font-weight: 700;
+    font-size: 16px;
+    color: #1565C0;
+    margin: 0 0 3px 0;
+  }
+
+  .ui-report-header p {
+    font-size: 13px;
+    color: #757575;
+    margin: 0;
+  }
+
+  .ui-report-stats {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+
+  .ui-report-stats span {
+    color: #757575;
+    font-weight: 600;
+  }
+
+  .ui-report-stats strong {
+    color: #1565C0;
+    font-weight: 700;
+  }
+
+  .separator {
+    color: #E0E0E0;
+    margin: 0 8px;
+  }
+
+  /* ---- NO DATA MESSAGE ---- */
+  .no-data-message {
+    padding: 48px 20px;
+    text-align: center;
+    color: #757575;
+    font-size: 15px;
+  }
+
+  /* ---- DOCTOR BLOCK (SCREEN) ---- */
+  .ui-doctor-block {
+    margin-bottom: 20px;
+  }
+
+  .ui-doctor-heading {
+    background: linear-gradient(135deg, #1565C0 0%, #1565C0 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 7px 7px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(21, 101, 192, 0.2);
+  }
+
+  /* ---- TABLES (SCREEN) ---- */
+  .ui-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #E0E0E0;
+  }
+
+  .ui-report-table thead {
+    background: #F8FAFC;
+  }
+
+  .ui-report-table th {
+    padding: 10px 13px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #757575;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #E0E0E0;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .ui-report-table td {
+    padding: 10px 13px;
+    font-size: 13px;
+    border-bottom: 1px solid #EEF2F7;
+    color: #212121;
+  }
+
+  .ui-report-table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  .ui-report-table tbody tr:hover {
+    background-color: #F5F5F5;
+  }
+
+  .ui-report-table tbody tr.alternate-row {
+    background: #FAFBFC;
+  }
+
+  /* ---- DOCTOR FOOTER (SCREEN) ---- */
+  .ui-doctor-footer {
+    background: #F0F4F8;
+    border-top: 1px solid #E0E0E0;
+    border-radius: 0 0 7px 7px;
+    padding: 8px 13px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1565C0;
+  }
+
+  .ui-doctor-footer span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ui-doctor-footer strong {
+    color: #2E7D32;
+  }
+
+  /* ---- GRAND TOTAL ---- */
+  .ui-grand-total {
+    margin-top: 6px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #F0F4F8 0%, #F5F7FA 100%);
+    border: 1.5px solid #E0E0E0;
+    border-radius: 8px;
+    display: flex;
+    gap: 36px;
+    align-items: center;
+    font-size: 13px;
+    color: #757575;
+    font-weight: 600;
+  }
+
+  .ui-grand-total strong {
+    color: #1565C0;
+    font-weight: 700;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media screen and (max-width: 1024px) {
+  .daily-report-container {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .daily-report-container {
+    padding: 16px;
+  }
+
+  .controls-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .controls-section label {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .controls-section input[type="date"],
+  .controls-section button {
+    width: 100%;
+  }
+
+  .ui-report-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ui-doctor-footer {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .ui-grand-total {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .ui-report-table {
+    font-size: 12px;
+  }
+
+  .ui-report-table th {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .ui-report-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .daily-report-container {
+    padding: 12px;
+  }
+
+  .controls-section {
+    padding: 12px 14px;
+  }
+
+  .ui-report-header {
+    padding: 12px 16px;
+  }
+
+  .ui-report-header h2 {
+    font-size: 14px;
+  }
+
+  .ui-report-header p {
+    font-size: 12px;
+  }
+
+  .ui-report-stats {
+    font-size: 12px;
+  }
+
+  .ui-doctor-heading {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .ui-report-table {
+    font-size: 11px;
+  }
+
+  .ui-report-table th {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+  .ui-report-table td {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+}
+
+/* ============================================
+   DARK MODE SUPPORT
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  .daily-report-container {
+    background: #121212;
+  }
+
+  .controls-section,
+  .report-display,
+  .loading-container {
+    background: #1e1e1e;
+    border-color: #333;
+  }
+
+  .controls-section input[type="date"] {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #333;
+  }
+
+  .ui-report-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #262626 100%);
+    border-color: #333;
+  }
+
+  .ui-report-header h2,
+  .ui-doctor-footer {
+    color: #64B5F6;
+  }
+
+  .ui-report-header p,
+  .controls-section label,
+  .error-message {
+    color: #b0b0b0;
+  }
+
+  .ui-report-table thead {
+    background: #262626;
+  }
+
+  .ui-report-table tbody tr {
+    color: #e0e0e0;
+  }
+
+  .ui-report-table tbody tr.alternate-row {
+    background: #1a1a1a;
+  }
+
+  .ui-report-table tbody tr:hover {
+    background: #272727;
+  }
+
+  .ui-doctor-footer {
+    background: #1a1a1a;
+    border-color: #333;
+  }
+
+  .ui-grand-total {
+    background: linear-gradient(135deg, #1a1a1a 0%, #262626 100%);
+    border-color: #333;
+  }
+
+  .ui-grand-total strong {
+    color: #64B5F6;
+  }
+}

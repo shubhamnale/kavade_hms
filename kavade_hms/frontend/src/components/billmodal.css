@@ -1,0 +1,369 @@
+/* ================================================================
+   BILLMODAL STYLES - PROFESSIONAL A4 INVOICE
+   Mobile-compatible print fix
+   ================================================================ */
+
+/* ── SCREEN: hide print area ─────────────────────────────── */
+@media screen {
+  #billprint {
+    display: none !important;
+  }
+}
+
+/* ── SCREEN: Bill modal responsiveness ───────────────────── */
+.billmodal-summary {
+  border: 1px solid #e6edf5;
+}
+
+@media screen and (max-width: 768px) {
+  .billmodal-summary {
+    padding: 14px !important;
+    margin-bottom: 12px !important;
+    border-radius: 10px !important;
+  }
+
+  .billmodal-payment-grid {
+    flex-direction: column;
+    gap: 10px !important;
+  }
+
+  .billmodal-codes-grid {
+    flex-wrap: wrap;
+  }
+
+  .billmodal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 8px !important;
+  }
+
+  .billmodal-footer button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .billmodal-summary {
+    padding: 12px !important;
+  }
+
+  .billmodal-codes-grid > div {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 14px !important;
+  }
+
+  .billmodal-payment-grid > div {
+    padding: 11px 14px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* ── PRINT ───────────────────────────────────────────────── */
+@media print {
+
+  /* PAGE SETUP */
+  @page {
+    size: A4 portrait;
+    margin: 15mm;
+  }
+
+  /* Mobile-safe print strategy:
+     - avoid display:none on ancestors (can blank nested print content)
+     - hide via visibility and explicitly reveal #billprint
+     - remove modal scrolling constraints during print */
+  body * {
+    visibility: hidden !important;
+  }
+
+  #billprint,
+  #billprint * {
+    visibility: visible !important;
+  }
+
+  .hms-modal-inner {
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .hms-modal-inner > *:not(#billprint) {
+    display: none !important;
+  }
+
+  #billprint {
+    display: block !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 210mm;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #000;
+  }
+
+  /* Reset all margins/paddings only inside billprint */
+  #billprint * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    width: 100%;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: white !important;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────────── */
+  #billprint-header {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12pt;
+    padding-bottom: 10pt;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #billprint-header h3 {
+    font-size: 16pt;
+    font-weight: bold;
+    margin: 0;
+    color: #000;
+  }
+
+  #billprint-header p {
+    font-size: 9pt;
+    color: #666;
+    margin: 2pt 0 0;
+  }
+
+  /* ── DOCTOR CODES ───────────────────────────────────────── */
+  #billprint-codes {
+    text-align: right;
+  }
+
+  #billprint-codes-label {
+    font-size: 8pt;
+    color: #999;
+    font-weight: bold;
+    margin-bottom: 4pt;
+    text-transform: uppercase;
+  }
+
+  #billprint-codes-display {
+    display: flex !important;
+    gap: 3pt;
+    justify-content: flex-end;
+  }
+
+  .billprint-code {
+    width: 20pt;
+    height: 20pt;
+    border: 1px solid #999;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 10pt;
+  }
+
+  .billprint-code.strikethrough {
+    color: #ccc;
+    text-decoration: line-through;
+  }
+
+  /* ── PATIENT DETAILS ────────────────────────────────────── */
+  #billprint-patient {
+    margin-bottom: 12pt;
+    width: 100%;
+  }
+
+  .billprint-row {
+    display: flex !important;
+    margin-bottom: 4pt;
+    font-size: 11pt;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .billprint-row-label {
+    font-weight: bold;
+    width: 75pt;
+    color: #000;
+    flex-shrink: 0;
+  }
+
+  .billprint-row-value {
+    flex: 1;
+    color: #333;
+    word-break: break-word;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .billprint-diagnosis {
+    font-style: italic;
+    color: #555;
+  }
+
+  /* ── DIVIDER ────────────────────────────────────────────── */
+  .billprint-divider {
+    height: 1px;
+    background: #ddd;
+    margin: 12pt 0;
+    border: none;
+    display: block !important;
+  }
+
+  /* ── SUGGESTED TESTS ────────────────────────────────────── */
+  #billprint-tests {
+    margin-bottom: 10pt;
+    width: 100%;
+    page-break-inside: avoid;
+  }
+
+  #billprint-tests-title {
+    font-size: 11pt;
+    font-weight: bold;
+    margin: 0 0 6pt;
+    color: #000;
+  }
+
+  .billprint-test-item {
+    position: relative;
+    font-size: 10pt;
+    color: #333;
+    margin-bottom: 4pt;
+    padding-left: 14pt;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  .billprint-test-item::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+  }
+
+  /* ── DISPENSED MEDICINES ────────────────────────────────── */
+  #billprint-medicines {
+    margin-bottom: 10pt;
+    width: 100%;
+    page-break-inside: avoid;
+  }
+
+  #billprint-medicines-title {
+    font-size: 11pt;
+    font-weight: bold;
+    margin: 0 0 6pt;
+    color: #000;
+  }
+
+  .billprint-medicine-item {
+    position: relative;
+    font-size: 10pt;
+    color: #333;
+    margin-bottom: 4pt;
+    padding-left: 14pt;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  .billprint-medicine-item::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+  }
+
+  /* ── BILLING ────────────────────────────────────────────── */
+  #billprint-billing {
+    margin-bottom: 10pt;
+  }
+
+  .billprint-billing-row {
+    display: flex !important;
+    justify-content: space-between;
+    margin-bottom: 6pt;
+    font-size: 11pt;
+  }
+
+  .billprint-billing-label {
+    color: #555;
+  }
+
+  .billprint-billing-amount {
+    font-weight: bold;
+    color: #000;
+    min-width: 80pt;
+    text-align: right;
+  }
+
+  /* ── TOTAL ──────────────────────────────────────────────── */
+  #billprint-total {
+    display: flex !important;
+    justify-content: space-between;
+    margin-top: 8pt;
+    padding: 10pt;
+    background: #f9f9f9;
+    border-radius: 2px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #billprint-total-label {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #000;
+  }
+
+  #billprint-total-amount {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #000;
+  }
+
+  /* ── PAYMENT CONFIRMATION ───────────────────────────────── */
+  #billprint-payment {
+    margin-top: 10pt;
+    padding: 8pt;
+    background: #f9f9f9;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bold;
+    border-radius: 2px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── FOOTER ─────────────────────────────────────────────── */
+  #billprint-footer {
+    margin-top: 12pt;
+    padding-top: 8pt;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    font-size: 9pt;
+    color: #777;
+  }
+
+  #billprint-footer-note {
+    margin: 0;
+  }
+
+  #billprint-footer-time {
+    font-size: 8pt;
+    color: #999;
+    margin: 2pt 0 0;
+  }
+}

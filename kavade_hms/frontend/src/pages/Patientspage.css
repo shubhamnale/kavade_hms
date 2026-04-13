@@ -1,0 +1,349 @@
+/* ============================================================
+   PatientsPage.css
+   Responsive styles for the Patients dashboard page
+   ============================================================ */
+
+
+/* ── Animations ───────────────────────────────────────────── */
+@keyframes shimmer {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none;            }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* ── Page Layout ──────────────────────────────────────────── */
+.patients-page {
+  padding: 28px;
+  animation: fadeIn 0.35s ease;
+}
+
+
+/* ── Sync Indicator (subtitle area) ──────────────────────── */
+.patients-sync-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.patients-sync-spinner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border-width: 1.5px;
+  border-style: solid;
+  border-top-color: transparent;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+
+/* ── Search Input ─────────────────────────────────────────── */
+.patients-search {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  width: 200px;
+  outline: none;
+  background: #fff;
+  border-width: 1.5px;
+  border-style: solid;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.patients-search:focus {
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15);
+}
+
+
+/* ── Status Filter Bar ────────────────────────────────────── */
+.patients-filter-bar {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.patients-filter-bar__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  margin: 0;
+}
+
+
+/* ── Status Checkboxes ────────────────────────────────────── */
+.patients-status-checkboxes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Individual toggle button */
+.patients-status-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 13px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.18s;
+  /* border / background / color set inline (dynamic from STATUS_COLORS) */
+}
+
+.patients-status-btn__box {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.patients-status-btn__check {
+  color: #fff;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.patients-filter-action-btn {
+  font-size: 11px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+
+/* ── Table Wrapper ────────────────────────────────────────── */
+.patients-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+
+/* ── Data Table ───────────────────────────────────────────── */
+.patients-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.patients-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  /* color / borderBottom / background come from theme and are set inline on <TH> */
+}
+
+.patients-table tbody tr {
+  border-bottom: 1px solid #EEF2F7;
+  transition: filter 0.15s;
+}
+
+.patients-table td {
+  padding: 11px 14px;
+}
+
+
+/* ── Cell Variants ────────────────────────────────────────── */
+.patients-cell--id {
+  font-weight: 700;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.patients-cell--name-primary {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.patients-cell--name-secondary {
+  font-size: 11px;
+}
+
+.patients-cell--age {
+  font-size: 13px;
+}
+
+.patients-cell--doctor-primary {
+  font-weight: 600;
+}
+
+.patients-cell--doctor-secondary {
+  font-size: 11px;
+}
+
+.patients-cell--time {
+  font-size: 12px;
+}
+
+.patients-cell--billing-time {
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.patients-cell--consult {
+  font-size: 12px;
+}
+
+.patients-cell--consult-value {
+  font-weight: 600;
+}
+
+/* Actions cell */
+.patients-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+
+/* ── Skeleton Row ─────────────────────────────────────────── */
+.patients-skeleton-cell {
+  height: 12px;
+  border-radius: 6px;
+  background: #EEF2F7;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+
+/* ── Empty State ──────────────────────────────────────────── */
+.patients-empty {
+  padding: 48px;
+  text-align: center;
+}
+
+.patients-empty__icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+
+/* ============================================================
+   Responsive Breakpoints
+   ============================================================ */
+
+/* ── Large Tablet (≤ 1024px) ──────────────────────────────── */
+@media (max-width: 1024px) {
+  .patients-page {
+    padding: 20px;
+  }
+
+  .patients-search {
+    width: 170px;
+  }
+}
+
+
+/* ── Small Tablet (≤ 768px) ───────────────────────────────── */
+@media (max-width: 768px) {
+  .patients-page {
+    padding: 16px;
+  }
+
+  .patients-filter-bar {
+    padding: 10px 14px;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .patients-status-checkboxes {
+    gap: 6px;
+  }
+
+  .patients-status-btn {
+    padding: 5px 11px;
+    font-size: 12px;
+  }
+
+  .patients-search {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  /* Fade-out scroll hint on the right edge of the table */
+  .patients-table-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 32px;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8));
+  }
+
+  .patients-table th,
+  .patients-table td {
+    padding: 9px 11px;
+  }
+
+  .patients-table th {
+    font-size: 12px;
+  }
+}
+
+
+/* ── Phone (≤ 480px) ──────────────────────────────────────── */
+@media (max-width: 480px) {
+  .patients-page {
+    padding: 12px;
+  }
+
+  .patients-filter-bar {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .patients-filter-bar__label {
+    font-size: 10px;
+  }
+
+  .patients-status-btn {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .patients-search {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .patients-empty {
+    padding: 32px 16px;
+  }
+
+  .patients-table th {
+    font-size: 11px;
+  }
+}
