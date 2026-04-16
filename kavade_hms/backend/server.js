@@ -34,11 +34,23 @@ const frontendDistPath = path.join(__dirname, '../frontend/dist')
 const parseAllowedOrigins = rawOrigins =>
   String(rawOrigins || '')
     .split(',')
-    .map(origin => origin.trim())
+    .map(origin => origin.trim().replace(/\/+$/, ''))
     .filter(Boolean)
 
-const allowedOrigins = parseAllowedOrigins(
-  process.env.ALLOWED_ORIGINS || process.env.ALLOWED_ORIGIN || 'http://localhost:3000'
+const defaultAllowedOrigins = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'https://kavadenursinghome.in',
+  'https://www.kavadenursinghome.in'
+]
+
+const allowedOrigins = Array.from(
+  new Set([
+    ...defaultAllowedOrigins,
+    ...parseAllowedOrigins(process.env.ALLOWED_ORIGINS || process.env.ALLOWED_ORIGIN)
+  ])
 )
 
 const shouldServeFrontend =
@@ -87,15 +99,20 @@ const authLimiter = rateLimit({
 app.disable('x-powered-by')
 app.use(helmet({ contentSecurityPolicy: false }))
 
-app.use(cors({
+const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+    const normalizedOrigin = String(origin || '').trim().replace(/\/+$/, '')
+
+    if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(normalizedOrigin)) {
       return callback(null, true)
     }
-    return callback(createCorsError(origin))
+    return callback(createCorsError(normalizedOrigin || origin))
   },
   credentials: true
-}))
+}
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions))
 app.use(express.json({ limit: JSON_BODY_LIMIT }))
 app.use(express.urlencoded({ extended: true, limit: URLENCODED_BODY_LIMIT }))
 
