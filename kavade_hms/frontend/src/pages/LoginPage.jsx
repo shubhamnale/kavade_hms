@@ -56,7 +56,7 @@ export default function LoginPage() {
       </div>
 
       <footer style={{ position:'absolute', bottom:14, left:'50%', transform:'translateX(-50%)', color:'rgba(255,255,255,.75)', fontSize:12, letterSpacing:'.2px', textAlign:'center', padding:'0 12px' }}>
-        © 2026 eneidasolutions. All rights reserved.
+      © 2026 Kavade Nursing Home. All rights reserved.
       </footer>
     </div>
   )
